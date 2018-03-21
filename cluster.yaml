@@ -115,7 +115,7 @@ metadata:
   name: master
 spec:
   image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
-  machineType: m3.medium
+  machineType: t2.medium
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -137,7 +137,7 @@ metadata:
   name: nodes
 spec:
   image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
-  machineType: t2.medium
+  machineType: t2.small
   maxSize: 2
   minSize: 2
   nodeLabels:
@@ -160,7 +160,7 @@ metadata:
   name: bastions
 spec:
   image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
-  machineType: t2.micro
+  machineType: t2.nano
   maxSize: 1
   minSize: 1
   nodeLabels:

@@ -1,4 +1,5 @@
-# HOW DO DEPLOYING
+# poacpm Infrastructure
+## HOW DO DEPLOYING
 
 :warning:
 **These files are provided to disclose the infrastructure configuration.
@@ -64,7 +65,6 @@ service "poacpm-service" created
 $ kubectl delete -f service.yaml
 $ kubectl delete -f deployment.yaml
 $ kubectl delete -f configmap.yaml
-$ export KOPS_STATE_STORE=s3://k8s.poac.pm
-$ kops delete -f cluster.yaml --yes
+$ kops delete -f cluster.yaml --state s3://k8s.poac.pm --yes
 ```
 
