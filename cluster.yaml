@@ -1,0 +1,173 @@
+apiVersion: kops/v1alpha2
+kind: Cluster
+metadata:
+  creationTimestamp: null
+  name: k8s.poac.pm
+spec:
+  additionalPolicies:
+    master: |
+      [
+        {
+            "Effect": "Allow",
+            "Action": "route53:ListHostedZonesByName",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "elasticloadbalancing:DescribeLoadBalancers",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "route53:ChangeResourceRecordSets",
+            "Resource": "*"
+        }
+      ]
+    node: |
+      [
+        {
+            "Effect": "Allow",
+            "Action": "route53:ListHostedZonesByName",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "elasticloadbalancing:DescribeLoadBalancers",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "route53:ChangeResourceRecordSets",
+            "Resource": "*"
+        }
+      ]
+  api:
+    loadBalancer:
+      type: Public
+  authorization:
+    alwaysAllow: {}
+  iam:
+    allowContainerRegistry: true
+    legacy: false
+  channel: stable
+  cloudProvider: aws
+  cloudLabels:
+    Owner: Ken Matsui
+  configBase: s3://k8s.poac.pm
+  kubernetesVersion: 1.9.5
+  etcdClusters:
+  - etcdMembers:
+    - instanceGroup: master
+      name: a
+    enableEtcdTLS: true
+    name: main
+    version: 3.0.17
+  - etcdMembers:
+    - instanceGroup: master
+      name: a
+    enableEtcdTLS: true
+    name: events
+    version: 3.0.17
+  subnets:
+  - cidr: 10.0.0.0/24
+    name: poacpm-priv-subnet1
+    type: Private
+    zone: ap-northeast-1a
+  - cidr: 10.0.1.0/24
+    name: poacpm-priv-subnet2
+    type: Private
+    zone: ap-northeast-1c
+  - cidr: 10.0.2.0/24
+    name: poacpm-pub-subnet3
+    type: Utility
+    zone: ap-northeast-1a
+  - cidr: 10.0.3.0/24
+    name: poacpm-pub-subnet4
+    type: Utility
+    zone: ap-northeast-1c
+  topology:
+    bastion:
+      bastionPublicName: bastion.k8s.poac.pm
+    dns:
+      type: Public
+    masters: private
+    nodes: private
+  networking:
+    weave:
+      mtu: 8912
+  networkCIDR: 10.0.0.0/16 # vpc
+  masterInternalName: api.internal.k8s.poac.pm
+  masterPublicName: api.k8s.poac.pm
+  nonMasqueradeCIDR: 100.64.0.0/10
+  sshAccess:
+  - 0.0.0.0/0
+  kubernetesApiAccess:
+  - 0.0.0.0/0
+
+---
+
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: k8s.poac.pm
+  name: master
+spec:
+  image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
+  machineType: m3.medium
+  maxSize: 1
+  minSize: 1
+  nodeLabels:
+    kops.k8s.io/instancegroup: master
+  role: Master
+  rootVolumeSize: 10
+  rootVolumeType: gp2
+  subnets:
+  - poacpm-priv-subnet1
+
+---
+
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: k8s.poac.pm
+  name: nodes
+spec:
+  image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
+  machineType: t2.medium
+  maxSize: 2
+  minSize: 2
+  nodeLabels:
+    kops.k8s.io/instancegroup: nodes
+  role: Node
+  rootVolumeSize: 8
+  rootVolumeType: gp2
+  subnets:
+  - poacpm-priv-subnet1
+  - poacpm-priv-subnet2
+
+---
+
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: k8s.poac.pm
+  name: bastions
+spec:
+  image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
+  machineType: t2.micro
+  maxSize: 1
+  minSize: 1
+  nodeLabels:
+    kops.k8s.io/instancegroup: bastions
+  role: Bastion
+  rootVolumeSize: 8
+  rootVolumeType: gp2
+  subnets:
+  - poacpm-pub-subnet3
+  - poacpm-pub-subnet4

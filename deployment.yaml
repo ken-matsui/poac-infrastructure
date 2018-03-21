@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: poacpm-deploy
+  labels:
+    app: poacpm
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: poacpm
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+          ports:
+            - containerPort: 80
+        - name: poacpm
+          image: 308453953340.dkr.ecr.ap-northeast-1.amazonaws.com/poacpm/poacpm
+          ports:
+            - containerPort: 4000
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+      imagePullSecrets:
+        - name: ecr
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: route53-mapper
+  namespace: kube-system
+  labels:
+    app: route53-mapper
+    k8s-addon: route53-mapper.addons.k8s.io
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: route53-mapper
+  template:
+    metadata:
+      labels:
+        app: route53-mapper
+    spec:
+      tolerations:
+        - key: dedicated
+          value: master
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      nodeSelector:
+        kubernetes.io/role: master
+      containers:
+        - image: quay.io/molecule/route53-kubernetes:v1.3.0
+          name: route53-mapper
