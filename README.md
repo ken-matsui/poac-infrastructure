@@ -5,6 +5,9 @@
 **These files are provided to disclose the infrastructure configuration.
 Therefore, it is impossible to create a similar environment without editing.**
 
+## TODO
+* terraform管理にする
+
 It assumes the macOS environment.
 あと，kopsを使用
 
@@ -12,7 +15,7 @@ It assumes the macOS environment.
 > https://aws.amazon.com/jp/blogs/news/configure-kubernetes-cluster-on-aws-by-kops/
 
 ```bash
-$ brew update && brew install kubectl kops awscli
+$ brew update && brew install kubectl kops awscli terraform
 $ aws configure
 
 $ export KOPS_STATE_STORE=s3://k8s.poac.pm
