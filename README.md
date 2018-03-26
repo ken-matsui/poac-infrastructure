@@ -7,8 +7,6 @@ Therefore, it is impossible to create a similar environment without editing.**
 
 ## TODO
 * terraform管理にする
-* その場合，us-east-1(バージニア北部)のSSL証明書(Certificate Manager)を削除する．
-* terraformでは，ap-northeast-1(mainリージョンかつ，lb用)とus-east-1(cloudfront用)で，同じ証明書が必要
 
 It assumes the macOS environment.
 あと，kopsを使用
