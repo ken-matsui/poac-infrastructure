@@ -1,8 +1,8 @@
 provider "aws" {
-  region = "ap-northeast-1"
+  region = "${var.regions["tokyo"]}"
   alias  = "tokyo"
 }
 provider "aws" {
-  region = "us-east-1"
+  region = "${var.regions["virginia"]}"
   alias  = "virginia"
 }
