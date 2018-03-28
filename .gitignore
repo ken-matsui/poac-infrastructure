@@ -7,3 +7,6 @@ _zip/
 # Module directory
 .DS_Store
 .terraform/
+
+# AWS credentials
+AWS_*

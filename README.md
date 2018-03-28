@@ -48,11 +48,22 @@ $ kubectl create secret docker-registry ecr \
    --docker-username=${ECR_SECRET[2]} \
    --docker-password=${ECR_SECRET[3]} \
    --docker-email=${ECR_SECRET[4]}
+secret "ecr" created
+$ cat ~/.aws/config | grep 'region' | awk '{printf $3}' > ./aws_default_region
+$ cat ~/.aws/credentials | grep 'aws_access_key_id' | awk '{printf $3}' > ./aws_access_key_id
+$ cat ~/.aws/credentials | grep 'aws_secret_access_key' | awk '{printf $3}' > ./aws_secret_access_key
+$ kubectl create secret generic aws-credentials --from-file=./aws_default_region --from-file=./aws_access_key_id --from-file=./aws_secret_access_key
+secret "aws-credentials" created
+$ rm -rf ./aws_*
+
 $ kubectl create -f deployment.yaml
 deployment "poacpm-deployment" created
+# どっち？
+#deployment.extensions "poacpm-deploy" created
+#deployment.extensions "route53-mapper" created
 
 # kubernetes dashboard # route53 mappingと競合するらしい．
-$ kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.1.yaml
+#$ kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.1.yaml
 
 $ kubectl create -f service.yaml
 service "poacpm-service" created
@@ -72,6 +83,8 @@ $ kops rolling-update cluster k8s.poac.pm --yes
 ```bash
 $ kubectl delete -f service.yaml
 $ kubectl delete -f deployment.yaml
+$ kubectl delete secret aws-credentials
+$ kubectl delete secret ecr
 $ kubectl delete -f configmap.yaml
 $ kops delete -f cluster.yaml --state s3://k8s.poac.pm --yes
 $ terraform destroy
