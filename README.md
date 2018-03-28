@@ -1,36 +1,24 @@
 # poacpm Infrastructure
-## HOW DO DEPLOYING
 
+## HOW DO DEPLOYING
 :warning:
 **These files are provided to disclose the infrastructure configuration.
 Therefore, it is impossible to create a similar environment without editing.**
 
-## TODO
-* terraform管理にする
-
+### Environment
 It assumes the macOS environment.
-あと，kopsを使用
+#### Tools
+* awscli
+* terraform
+* kubectl
+* kops
 
-これを参考にした．
-> https://aws.amazon.com/jp/blogs/news/configure-kubernetes-cluster-on-aws-by-kops/
-
+### Deploy command
 ```bash
-$ brew update && brew install kubectl kops awscli terraform
+$ brew install awscli terraform kubectl kops
 $ aws configure
 
 $ export KOPS_STATE_STORE=s3://k8s.poac.pm
-$ aws s3 mb $KOPS_STATE_STORE
-
-$ aws route53 create-hosted-zone \
---name k8s.poac.pm \
---caller-reference $(uuidgen)
-
-# poac.pmのHostedZoneにNSレコードを追加すると，以下のコマンドで結果が返る
-$ dig +short k8s.poac.pm ns
-ns-541.awsdns-03.net.
-ns-251.awsdns-31.com.
-ns-1345.awsdns-40.org.
-ns-1550.awsdns-01.co.uk.
 
 $ kops create -f cluster.yaml
 $ kops create secret --name k8s.poac.pm sshpublickey admin -i ~/.ssh/keys/pub/poacpm.pub
@@ -62,8 +50,7 @@ $ kubectl create -f service.yaml
 service "poacpm-service" created
 ```
 
-
-## 削除
+## Delete command
 ```bash
 $ kubectl delete -f service.yaml
 $ kubectl delete -f deployment.yaml
@@ -71,3 +58,6 @@ $ kubectl delete -f configmap.yaml
 $ kops delete -f cluster.yaml --state s3://k8s.poac.pm --yes
 ```
 
+## References
+> [1] kopsを使ってKubernetesクラスタをAWS上で構成
+https://aws.amazon.com/jp/blogs/news/configure-kubernetes-cluster-on-aws-by-kops/
