@@ -24,6 +24,22 @@ spec:
           image: 308453953340.dkr.ecr.ap-northeast-1.amazonaws.com/poacpm/poacpm
           ports:
             - containerPort: 4000
+          env:
+            - name: AWS_DEFAULT_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: aws_default_region
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: aws_access_key_id
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: aws_secret_access_key
       volumes:
         - name: nginx-config
           configMap:
