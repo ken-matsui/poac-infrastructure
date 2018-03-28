@@ -18,13 +18,20 @@ It assumes the macOS environment.
 $ brew install awscli terraform kubectl kops
 $ aws configure
 
+
+# poac.pmのNSレコードをドメイン取得元に登録する．
+# VPC ID と subnet IDをcluster.yamlに書き込む
+
+
+
+# Route53のpoac.pmのAレコードに，LoadBalancerへのALIASを貼る
+
+
 $ export KOPS_STATE_STORE=s3://k8s.poac.pm
 
 $ kops create -f cluster.yaml
 $ kops create secret --name k8s.poac.pm sshpublickey admin -i ~/.ssh/keys/pub/poacpm.pub
 $ kops update cluster k8s.poac.pm --yes
-# Update command
-$ kops rolling-update cluster k8s.poac.pm --yes
 
 # Wait 5 miniutes or more...
 $ kops validate cluster
@@ -48,6 +55,11 @@ $ kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/add
 
 $ kubectl create -f service.yaml
 service "poacpm-service" created
+```
+
+### Update command
+```bash
+$ kops rolling-update cluster k8s.poac.pm --yes
 ```
 
 ### Delete command
