@@ -70,25 +70,25 @@ spec:
     version: 3.0.17
   subnets:
   - cidr: 10.0.0.0/24
-    name: poacpm-priv-subnet1
+    name: poacpm-priv1
     type: Private
     zone: ap-northeast-1a
-    # id:
+    id: subnet-0db692319ab3648aa
   - cidr: 10.0.1.0/24
-    name: poacpm-priv-subnet2
+    name: poacpm-priv2
     type: Private
     zone: ap-northeast-1c
-    # id:
+    id: subnet-071b4d19aa62e5356
   - cidr: 10.0.2.0/24
-    name: poacpm-pub-subnet3
+    name: poacpm-pub3
     type: Utility
     zone: ap-northeast-1a
-    # id:
+    id: subnet-088194729ea63b1b3
   - cidr: 10.0.3.0/24
-    name: poacpm-pub-subnet4
+    name: poacpm-pub4
     type: Utility
     zone: ap-northeast-1c
-    # id:
+    id: subnet-0073d65a757933ae9
   topology:
     bastion:
       bastionPublicName: bastion.k8s.poac.pm
@@ -99,8 +99,8 @@ spec:
   networking:
     weave:
       mtu: 8912
-  networkCIDR: 10.0.0.0/16 # vpc
-  # networkID:
+  networkCIDR: 10.0.0.0/16
+  networkID: vpc-0c42e63297cb13165
   masterInternalName: api.internal.k8s.poac.pm
   masterPublicName: api.k8s.poac.pm
   nonMasqueradeCIDR: 100.64.0.0/10
@@ -120,9 +120,7 @@ metadata:
   name: master
 spec:
   image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
-  # TODO
-  # machineType: t2.small
-  machineType: t2.medium
+  machineType: t2.small
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -131,7 +129,7 @@ spec:
   rootVolumeSize: 8
   rootVolumeType: gp2
   subnets:
-  - poacpm-priv-subnet1
+  - poacpm-priv1
 
 ---
 
@@ -144,21 +142,17 @@ metadata:
   name: nodes
 spec:
   image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
-  machineType: t2.small
-  # TODO
-  # machineType: t2.micro
+  machineType: t2.micro
   maxSize: 2
   minSize: 2
   nodeLabels:
     kops.k8s.io/instancegroup: nodes
   role: Node
-  rootVolumeSize: 8
-  # TODO
-  # rootVolumeSize: 20
+  rootVolumeSize: 20
   rootVolumeType: gp2
   subnets:
-  - poacpm-priv-subnet1
-  - poacpm-priv-subnet2
+  - poacpm-priv1
+  - poacpm-priv2
 
 ---
 
@@ -180,5 +174,5 @@ spec:
   rootVolumeSize: 8
   rootVolumeType: gp2
   subnets:
-  - poacpm-pub-subnet3
-  - poacpm-pub-subnet4
+  - poacpm-pub3
+  - poacpm-pub4

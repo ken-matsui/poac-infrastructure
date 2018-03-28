@@ -6,7 +6,7 @@
 Therefore, it is impossible to create a similar environment without editing.**
 
 ### Environment
-It assumes the macOS environment.
+It assumes the macOS.
 #### Tools
 * awscli
 * terraform
@@ -14,28 +14,29 @@ It assumes the macOS environment.
 * kops
 
 ### Deploy command
+**既に，Route53でpoac.pmドメインの取得と，CertificateManagerのap-northeast-1でpoac.pmと，us-east-1で\*.poac.pmを取得している**
 ```bash
 $ brew install awscli terraform kubectl kops
 $ aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: ap-northeast-1
+Default output format [None]:
 
+$ pushd terrafrom
+$ terraform apply
+Apply complete!
+$ popd
 
-# poac.pmのNSレコードをドメイン取得元に登録する．
-# VPC ID と subnet IDをcluster.yamlに書き込む
-
-
-
-# Route53のpoac.pmのAレコードに，LoadBalancerへのALIASを貼る
-
-
+# VPC ID と subnet IDをcluster.yamlに書き込む...
+$ pushd k8s
 $ export KOPS_STATE_STORE=s3://k8s.poac.pm
-
 $ kops create -f cluster.yaml
 $ kops create secret --name k8s.poac.pm sshpublickey admin -i ~/.ssh/keys/pub/poacpm.pub
 $ kops update cluster k8s.poac.pm --yes
 
 # Wait 5 miniutes or more...
 $ kops validate cluster
-...
 Your cluster k8s.poac.pm is ready
 
 $ kubectl create -f configmap.yaml
@@ -55,6 +56,11 @@ $ kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/add
 
 $ kubectl create -f service.yaml
 service "poacpm-service" created
+
+$ popd
+
+
+# Route53のpoac.pmのAレコードに，LoadBalancerへのALIASを貼る
 ```
 
 ### Update command
@@ -68,6 +74,7 @@ $ kubectl delete -f service.yaml
 $ kubectl delete -f deployment.yaml
 $ kubectl delete -f configmap.yaml
 $ kops delete -f cluster.yaml --state s3://k8s.poac.pm --yes
+$ terraform destroy
 ```
 
 ## References
