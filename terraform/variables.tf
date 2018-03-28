@@ -10,3 +10,5 @@ variable "regions" {
     virginia = "us-east-1"
   }
 }
+variable "rds_username" {}
+variable "rds_password" {}
