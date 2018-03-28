@@ -50,7 +50,7 @@ $ kubectl create -f service.yaml
 service "poacpm-service" created
 ```
 
-## Delete command
+### Delete command
 ```bash
 $ kubectl delete -f service.yaml
 $ kubectl delete -f deployment.yaml
