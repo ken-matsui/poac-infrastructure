@@ -40,6 +40,11 @@ spec:
                 secretKeyRef:
                   name: aws-credentials
                   key: aws_secret_access_key
+            - name: SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: slack-secrets
+                  key: slack_webhook_url
       volumes:
         - name: nginx-config
           configMap:
@@ -52,28 +57,23 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: route53-mapper
-  namespace: kube-system
-  labels:
-    app: route53-mapper
-    k8s-addon: route53-mapper.addons.k8s.io
+  name: external-dns
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: route53-mapper
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
-        app: route53-mapper
+        app: external-dns
     spec:
-      tolerations:
-        - key: dedicated
-          value: master
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
-      nodeSelector:
-        kubernetes.io/role: master
       containers:
-        - image: quay.io/molecule/route53-kubernetes:v1.3.0
-          name: route53-mapper
+      - name: external-dns
+        image: registry.opensource.zalan.do/teapot/external-dns:v0.4.8
+        args:
+        - --source=service
+        - --source=ingress
+        - --domain-filter=poac.pm
+        - --provider=aws
+        - --aws-zone-type=public
+        - --registry=txt
+        - --txt-owner-id=extdns

@@ -2,18 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: poacpm
-  labels:
-    app: poacpm
-    dns: route53
   annotations:
-    dns.alpha.kubernetes.io/external: "poac.pm"
+    external-dns.alpha.kubernetes.io/hostname: poac.pm.
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-northeast-1:308453953340:certificate/9a447820-5a69-4c13-8ebe-dc9fb0e90104
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
 spec:
-  selector:
-    app: poacpm
+  type: LoadBalancer
   ports:
     - name: http
       port: 80
@@ -23,4 +19,5 @@ spec:
       port: 443
       targetPort: 80
       protocol: TCP
-  type: LoadBalancer
+  selector:
+    app: poacpm
