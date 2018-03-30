@@ -42,6 +42,9 @@ Your cluster k8s.poac.pm is ready
 $ kubectl create -f configmap.yaml
 configmap "nginx-config" created
 
+################
+# Secrets
+################
 $ export ECR_SECRET=( `aws ecr get-login --region ap-northeast-1 | awk '{print $9,$4,$6,$8}'` )
 $ kubectl create secret docker-registry ecr \
    --docker-server=${ECR_SECRET[1]} \
@@ -49,29 +52,45 @@ $ kubectl create secret docker-registry ecr \
    --docker-password=${ECR_SECRET[3]} \
    --docker-email=${ECR_SECRET[4]}
 secret "ecr" created
+
 $ cat ~/.aws/config | grep 'region' | awk '{printf $3}' > ./aws_default_region
 $ cat ~/.aws/credentials | grep 'aws_access_key_id' | awk '{printf $3}' > ./aws_access_key_id
 $ cat ~/.aws/credentials | grep 'aws_secret_access_key' | awk '{printf $3}' > ./aws_secret_access_key
 $ kubectl create secret generic aws-credentials --from-file=./aws_default_region --from-file=./aws_access_key_id --from-file=./aws_secret_access_key
 secret "aws-credentials" created
-$ rm -rf ./aws_*
+$ rm -f ./aws_*
 
+$ printf 'https://hooks.slack.com/services/AAAAAAA/BBBBBBBB/CCCCCCCCCCCCCCCCCCCC' > ./slack_webhook_url
+$ kubectl create secret generic slack-secrets --from-file=./slack_webhook_url
+secret "slack-secrets" created
+$ rm -f ./slack_webhook_url
+
+
+################
+# Deployments
+################
 $ kubectl create -f deployment.yaml
-deployment "poacpm-deployment" created
-# どっち？
-#deployment.extensions "poacpm-deploy" created
-#deployment.extensions "route53-mapper" created
+deployment.extensions "poacpm-deploy" created
+deployment.extensions "external-dns" created
 
-# kubernetes dashboard # route53 mappingと競合するらしい．
-#$ kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.1.yaml
+# kubernetes dashboard
+$ kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.1.yaml
+secret "kubernetes-dashboard-certs" created
+serviceaccount "kubernetes-dashboard" created
+role.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
+rolebinding.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
+deployment.apps "kubernetes-dashboard" created
+service "kubernetes-dashboard" created
 
+
+################
+# Services
+################
 $ kubectl create -f service.yaml
 service "poacpm-service" created
 
+
 $ popd
-
-
-# Route53のpoac.pmのAレコードに，LoadBalancerへのALIASを貼る
 ```
 
 ### Update command
@@ -82,7 +101,9 @@ $ kops rolling-update cluster k8s.poac.pm --yes
 ### Delete command
 ```bash
 $ kubectl delete -f service.yaml
+$ kubectl delete -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.1.yaml
 $ kubectl delete -f deployment.yaml
+$ kubectl delete secret slack-secrets
 $ kubectl delete secret aws-credentials
 $ kubectl delete secret ecr
 $ kubectl delete -f configmap.yaml

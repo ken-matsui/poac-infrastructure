@@ -9,4 +9,6 @@ _zip/
 .terraform/
 
 # AWS credentials
-AWS_*
+aws_*
+# slack secrets
+slack_webhook_url
