@@ -16,7 +16,7 @@ It assumes the macOS.
 ### Deploy command
 **既に，Route53でpoac.pmドメインの取得と，CertificateManagerのap-northeast-1でpoac.pmと，us-east-1で\*.poac.pmを取得している**
 
-#### Installation and Configuration
+### Installation and Configuration
 ```bash
 $ brew install awscli terraform kubectl kops
 $ aws configure
@@ -26,7 +26,7 @@ Default region name [None]: ap-northeast-1
 Default output format [None]:
 ```
 
-#### terraform
+### terraform
 ```bash
 $ pushd terrafrom
 $ terraform apply
@@ -35,8 +35,8 @@ $ popd
 ```
 
 *VPC ID と subnet IDをcluster.yamlに書き込む...*
-#### kubernetes
-##### Cluster
+### kubernetes
+#### Cluster
 ```bash
 $ cd k8s
 $ export KOPS_STATE_STORE=s3://k8s.poac.pm
@@ -51,13 +51,13 @@ $ kops validate cluster
 Your cluster k8s.poac.pm is ready
 ```
 
-##### Config-Map
+#### Config-Map
 ```bash
 $ kubectl create -f configmap.yaml
 configmap "nginx-config" created
 ```
 
-##### Secrets
+#### Secrets
 ```bash
 $ export ECR_SECRET=( `aws ecr get-login --region ap-northeast-1 | awk '{print $9,$4,$6,$8}'` )
 $ kubectl create secret docker-registry ecr \
@@ -82,7 +82,7 @@ secret "slack-secrets" created
 $ rm -f ./slack_webhook_url
 ```
 
-##### Deployments
+#### Deployments
 ```bash
 $ kubectl create -f deployment.yaml
 deployment.extensions "poacpm-deploy" created
@@ -100,7 +100,7 @@ deployment.apps "kubernetes-dashboard" created
 service "kubernetes-dashboard" created
 ```
 
-##### Services
+#### Services
 ```bash
 $ kubectl create -f service.yaml
 service "poacpm-service" created
