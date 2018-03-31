@@ -5,28 +5,6 @@ metadata:
   name: k8s.poac.pm
 spec:
   additionalPolicies:
-    master: |
-      [
-        {
-          "Effect": "Allow",
-          "Action": [
-            "route53:ChangeResourceRecordSets"
-          ],
-          "Resource": [
-            "arn:aws:route53:::hostedzone/*"
-          ]
-        },
-        {
-          "Effect": "Allow",
-          "Action": [
-            "route53:ListHostedZones",
-            "route53:ListResourceRecordSets"
-          ],
-          "Resource": [
-            "*"
-          ]
-        }
-      ]
     node: |
       [
         {
@@ -42,7 +20,11 @@ spec:
           "Effect": "Allow",
           "Action": [
             "route53:ListHostedZones",
-            "route53:ListResourceRecordSets"
+            "route53:ListResourceRecordSets",
+            "dynamodb:*",
+            "rds:*",
+            "s3:*",
+            "es:*"
           ],
           "Resource": [
             "*"

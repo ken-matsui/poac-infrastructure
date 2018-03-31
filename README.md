@@ -15,6 +15,8 @@ It assumes the macOS.
 
 ### Deploy command
 **既に，Route53でpoac.pmドメインの取得と，CertificateManagerのap-northeast-1でpoac.pmと，us-east-1で\*.poac.pmを取得している**
+
+#### Installation and Configuration
 ```bash
 $ brew install awscli terraform kubectl kops
 $ aws configure
@@ -22,29 +24,41 @@ AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
 AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 Default region name [None]: ap-northeast-1
 Default output format [None]:
+```
 
+#### terraform
+```bash
 $ pushd terrafrom
 $ terraform apply
 Apply complete!
 $ popd
+```
 
-# VPC ID と subnet IDをcluster.yamlに書き込む...
-$ pushd k8s
+*VPC ID と subnet IDをcluster.yamlに書き込む...*
+#### kubernetes
+##### Cluster
+```bash
+$ cd k8s
 $ export KOPS_STATE_STORE=s3://k8s.poac.pm
 $ kops create -f cluster.yaml
 $ kops create secret --name k8s.poac.pm sshpublickey admin -i ~/.ssh/keys/pub/poacpm.pub
 $ kops update cluster k8s.poac.pm --yes
+```
 
-# Wait 5 miniutes or more...
+*Wait 5 miniutes or more...*
+```bash
 $ kops validate cluster
 Your cluster k8s.poac.pm is ready
+```
 
+##### Config-Map
+```bash
 $ kubectl create -f configmap.yaml
 configmap "nginx-config" created
+```
 
-################
-# Secrets
-################
+##### Secrets
+```bash
 $ export ECR_SECRET=( `aws ecr get-login --region ap-northeast-1 | awk '{print $9,$4,$6,$8}'` )
 $ kubectl create secret docker-registry ecr \
    --docker-server=${ECR_SECRET[1]} \
@@ -52,28 +66,31 @@ $ kubectl create secret docker-registry ecr \
    --docker-password=${ECR_SECRET[3]} \
    --docker-email=${ECR_SECRET[4]}
 secret "ecr" created
-
+```
+```bash
 $ cat ~/.aws/config | grep 'region' | awk '{printf $3}' > ./aws_default_region
 $ cat ~/.aws/credentials | grep 'aws_access_key_id' | awk '{printf $3}' > ./aws_access_key_id
 $ cat ~/.aws/credentials | grep 'aws_secret_access_key' | awk '{printf $3}' > ./aws_secret_access_key
 $ kubectl create secret generic aws-credentials --from-file=./aws_default_region --from-file=./aws_access_key_id --from-file=./aws_secret_access_key
 secret "aws-credentials" created
 $ rm -f ./aws_*
-
+```
+```bash
 $ printf 'https://hooks.slack.com/services/AAAAAAA/BBBBBBBB/CCCCCCCCCCCCCCCCCCCC' > ./slack_webhook_url
 $ kubectl create secret generic slack-secrets --from-file=./slack_webhook_url
 secret "slack-secrets" created
 $ rm -f ./slack_webhook_url
+```
 
-
-################
-# Deployments
-################
+##### Deployments
+```bash
 $ kubectl create -f deployment.yaml
 deployment.extensions "poacpm-deploy" created
 deployment.extensions "external-dns" created
+```
 
-# kubernetes dashboard
+*kubernetes dashboard*
+```bash
 $ kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.1.yaml
 secret "kubernetes-dashboard-certs" created
 serviceaccount "kubernetes-dashboard" created
@@ -81,17 +98,14 @@ role.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
 rolebinding.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
 deployment.apps "kubernetes-dashboard" created
 service "kubernetes-dashboard" created
+```
 
-
-################
-# Services
-################
+##### Services
+```bash
 $ kubectl create -f service.yaml
 service "poacpm-service" created
-
-
-$ popd
 ```
+
 
 ### Update command
 ```bash
