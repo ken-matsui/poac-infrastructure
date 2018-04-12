@@ -1,19 +1,18 @@
 # poacpm Infrastructure
 
-## HOW DO DEPLOYING
 :warning:
 **These files are provided to disclose the infrastructure configuration.
 Therefore, it is impossible to create a similar environment without editing.**
 
-### Environment
+## Environment
 It assumes the macOS.
-#### Tools
+### Tools
 * awscli
 * terraform
 * kubectl
 * kops
 
-### Deploy command
+## Deploy command
 **既に，Route53でpoac.pmドメインの取得と，CertificateManagerのap-northeast-1でpoac.pmと，us-east-1で\*.poac.pmを取得している**
 
 ### Installation and Configuration
