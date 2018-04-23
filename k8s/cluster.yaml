@@ -111,6 +111,8 @@ metadata:
 spec:
   image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
   machineType: t2.small
+  # TODO:
+  # machineType: t2.micro
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -139,6 +141,8 @@ spec:
     kops.k8s.io/instancegroup: nodes
   role: Node
   rootVolumeSize: 20
+  # TODO:
+  # rootVolumeSize: 8
   rootVolumeType: gp2
   subnets:
   - poacpm-priv1
