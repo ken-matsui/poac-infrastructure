@@ -15,6 +15,7 @@ resource "aws_rds_cluster" "cluster" {
   db_subnet_group_name      = "${aws_db_subnet_group.default.name}"
   storage_encrypted         = true
   backup_retention_period   = 5
+  final_snapshot_identifier = "poacpm-cluster"
 }
 resource "aws_rds_cluster_instance" "cluster_instances" {
   count              = 2
