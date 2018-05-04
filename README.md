@@ -14,7 +14,7 @@ It assumes the macOS.
 
 ## Deploy command
 **We already got the `poac.pm` domain by `Route 53`.
-Also, we got `poac.pm` on `ap-northeast-1` and `* .poac.pm` on `us-east-1` by `Certificate Manager`.**
+Also, we got `poac.pm` on `ap-northeast-1` and `*.poac.pm` on `us-east-1` by `Certificate Manager`.**
 
 ### Installation and Configuration
 ```bash
