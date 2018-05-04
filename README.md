@@ -13,7 +13,8 @@ It assumes the macOS.
 * kops
 
 ## Deploy command
-**既に，Route53でpoac.pmドメインの取得と，CertificateManagerのap-northeast-1でpoac.pmと，us-east-1で\*.poac.pmを取得している**
+**We already got the `poac.pm` domain by `Route 53`.
+Also, we got `poac.pm` on `ap-northeast-1` and `* .poac.pm` on `us-east-1` by `Certificate Manager`.**
 
 ### Installation and Configuration
 ```bash
@@ -33,7 +34,7 @@ Apply complete!
 $ popd
 ```
 
-*VPC ID と subnet IDをcluster.yamlに書き込む...*
+*Write VPC-ID and Subnet-ID to cluster.yaml...*
 ### kubernetes
 #### Cluster
 ```bash
