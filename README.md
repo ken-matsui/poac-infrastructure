@@ -34,7 +34,7 @@ Apply complete!
 $ popd
 ```
 
-*Write VPC-ID and Subnet-ID to cluster.yaml...*
+*Write `VPC-ID`(networkID) and `Subnet-ID` to [`cluster.yaml`](/k8s/cluster.yaml)...*
 ### kubernetes
 #### Cluster
 ```bash
