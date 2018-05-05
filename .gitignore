@@ -12,3 +12,10 @@ _zip/
 aws_*
 # slack secrets
 slack_webhook_url
+
+# dynamodb_to_es
+terraform/dynamodb_to_es/*
+!terraform/dynamodb_to_es/.gitignore
+!terraform/dynamodb_to_es/lambda_function.py
+!terraform/dynamodb_to_es/README.md
+!terraform/dynamodb_to_es/requirements.txt

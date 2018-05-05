@@ -29,8 +29,15 @@ Default output format [None]:
 ### terraform
 ```bash
 $ pushd terrafrom
+$ pushd dynamodb_to_es
+$ pip install -r ./requirements.txt -t ./
+$ popd
+$ terraform init
 $ terraform apply
 Apply complete!
+# Write ENDPOINT to elasticsearch.sh...
+$ bash elasticsearch.sh
+{"acknowledged":true}
 $ popd
 ```
 
