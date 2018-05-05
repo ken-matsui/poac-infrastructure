@@ -22,13 +22,3 @@ curl -X PUT ${ENDPOINT}/_template/template_1 -H 'Content-Type: application/json'
     }
   }
 }'
-curl -X POST "${ENDPOINT}/package/_delete_by_query" -H 'Content-Type: application/json' -d'
-{
-  "query": {
-    "match": {
-      "name": "test",
-      "date": "hoge"
-    }
-  }
-}
-'
