@@ -57,15 +57,3 @@ def lambda_handler(event, context):
 	elif eventName == 'REMOVE':
 		es_delete(event['Records'][0])
 		print('es_delete')
-
-# curl -X POST ${ENDPOINT}/package/_search -H $HEADER -d '
-# {
-#   "suggest": {
-#     "my-suggestion": {
-#       "prefix": "t",
-#       "completion": {
-#         "field": "name"
-#       }
-#     }
-#   }
-# }'
