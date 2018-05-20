@@ -11,5 +11,4 @@ variable "regions" {
   }
 }
 data "aws_caller_identity" "self" { }
-variable "rds_username" {}
 variable "rds_password" {}

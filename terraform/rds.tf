@@ -9,7 +9,7 @@ resource "aws_rds_cluster" "cluster" {
   cluster_identifier        = "poacpm-cluster"
   database_name             = "poacpmcore"
   engine                    = "aurora"
-  master_username           = "${var.rds_username}"
+  master_username           = "root"
   master_password           = "${var.rds_password}"
   availability_zones        = ["${var.regions["tokyo"]}a", "${var.regions["tokyo"]}c"]
   db_subnet_group_name      = "${aws_db_subnet_group.default.name}"
