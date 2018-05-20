@@ -12,7 +12,7 @@ It assumes the macOS.
 * kubectl
 * kops
 
-## Deploy command
+## Deploy
 **We already got the `poac.pm` domain by `Route 53`.
 Also, we got `poac.pm` on `ap-northeast-1` and `*.poac.pm` on `us-east-1` by `Certificate Manager`.**
 
@@ -114,12 +114,12 @@ service "poacpm-service" created
 ```
 
 
-### Update command
+## Update
 ```bash
 $ kops rolling-update cluster k8s.poac.pm --yes
 ```
 
-### Delete command
+## Delete
 ```bash
 $ kubectl delete -f service.yaml
 $ kubectl delete -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.1.yaml
