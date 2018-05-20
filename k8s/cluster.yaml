@@ -63,22 +63,22 @@ spec:
     name: poacpm-priv1
     type: Private
     zone: ap-northeast-1a
-    id: subnet-0db692319ab3648aa
+    id: subnet-0c101901cefd94fed
   - cidr: 10.0.2.0/24
     name: poacpm-priv2
     type: Private
     zone: ap-northeast-1c
-    id: subnet-071b4d19aa62e5356
+    id: subnet-0cc0f30c8b1fef17b
   - cidr: 10.0.3.0/24
     name: poacpm-pub3
     type: Utility
     zone: ap-northeast-1a
-    id: subnet-088194729ea63b1b3
+    id: subnet-04d969767b991ae4e
   - cidr: 10.0.4.0/24
     name: poacpm-pub4
     type: Utility
     zone: ap-northeast-1c
-    id: subnet-0073d65a757933ae9
+    id: subnet-0375a1a3a0c48de67
   topology:
     bastion:
       bastionPublicName: bastion.k8s.poac.pm
@@ -90,7 +90,7 @@ spec:
     weave:
       mtu: 8912
   networkCIDR: 10.0.0.0/16
-  networkID: vpc-0c42e63297cb13165
+  networkID: vpc-062b9b76b4b690aa5
   masterInternalName: api.internal.k8s.poac.pm
   masterPublicName: api.k8s.poac.pm
   nonMasqueradeCIDR: 100.64.0.0/10
