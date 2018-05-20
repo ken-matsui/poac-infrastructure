@@ -37,7 +37,7 @@ resource "aws_elasticsearch_domain" "es" {
       "Action": [
         "es:*"
       ],
-      "Resource": "arn:aws:es:ap-northeast-1:${data.aws_caller_identity.self.account_id}:domain/${aws_elasticsearch_domain.es.domain_id}/*"
+      "Resource": "arn:aws:es:ap-northeast-1:${data.aws_caller_identity.self.account_id}:domain/poacpm/*"
     }
   ]
 }
