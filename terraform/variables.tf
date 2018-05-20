@@ -10,5 +10,6 @@ variable "regions" {
     virginia = "us-east-1"
   }
 }
+data "aws_caller_identity" "self" { }
 variable "rds_username" {}
 variable "rds_password" {}
