@@ -35,9 +35,18 @@ $ popd
 $ terraform init
 $ terraform apply
 Apply complete!
-# Write ENDPOINT to elasticsearch.sh...
-$ bash elasticsearch.sh
-{"acknowledged":true}
+
+Outputs:
+
+COMMENT = Please write VPC-ID(networkID) and Subnet-ID to k8s/cluster.yaml
+es-endpoint = vpc-poacpm-2gue3ols5i62ko67jhgu2e3z4a.ap-northeast-1.es.amazonaws.com
+subnet-id-priv1 = subnet-0c101901cefd94fed
+subnet-id-priv2 = subnet-0cc0f30c8b1fef17b
+subnet-id-pub3 = subnet-04d969767b991ae4e
+subnet-id-pub4 = subnet-0375a1a3a0c48de67
+vpc-id = vpc-062b9b76b4b690aa5
+
+$ export AWS_ES_ENDPOINT='https://vpc-poacpm-2gue3ols5i62ko67jhgu2e3z4a.ap-northeast-1.es.amazonaws.com'
 $ popd
 ```
 
@@ -87,6 +96,12 @@ $ printf 'https://hooks.slack.com/services/AAAAAAA/BBBBBBBB/CCCCCCCCCCCCCCCCCCCC
 $ kubectl create secret generic slack-secrets --from-file=./slack_webhook_url
 secret "slack-secrets" created
 $ rm -f ./slack_webhook_url
+```
+```bash
+$ echo -n $AWS_ES_ENDPOINT > ./aws_es_endpoint
+$ kubectl create secret generic aws-es-endpoint --from-file=./aws_es_endpoint
+secret "aws-es-endpoint" created
+$ rm -f ./aws_es_endpoint
 ```
 
 #### Deployments

@@ -45,6 +45,11 @@ spec:
                 secretKeyRef:
                   name: slack-secrets
                   key: slack_webhook_url
+            - name: AWS_ES_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: aws-es-endpoint
+                  key: aws_es_endpoint
       volumes:
         - name: nginx-config
           configMap:
