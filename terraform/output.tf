@@ -1,17 +1,17 @@
 output "vpc-id" {
-  value = "${aws_vpc.main.cidr_block}"
+  value = "${aws_vpc.main.id}"
 }
 output "subnet-id-priv1" {
-  value = "${aws_subnet.priv1.cidr_block}"
+  value = "${aws_subnet.priv1.id}"
 }
 output "subnet-id-priv2" {
-  value = "${aws_subnet.priv2.cidr_block}"
+  value = "${aws_subnet.priv2.id}"
 }
 output "subnet-id-pub3" {
-  value = "${aws_subnet.pub3.cidr_block}"
+  value = "${aws_subnet.pub3.id}"
 }
 output "subnet-id-pub4" {
-  value = "${aws_subnet.pub4.cidr_block}"
+  value = "${aws_subnet.pub4.id}"
 }
 output "es-endpoint" {
   value = "${aws_elasticsearch_domain.es.endpoint}"
