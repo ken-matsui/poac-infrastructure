@@ -113,7 +113,7 @@ deployment.extensions "external-dns" created
 
 *kubernetes dashboard*
 ```bash
-$ kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.1.yaml
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
 secret "kubernetes-dashboard-certs" created
 serviceaccount "kubernetes-dashboard" created
 role.rbac.authorization.k8s.io "kubernetes-dashboard-minimal" created
