@@ -128,6 +128,18 @@ $ kubectl create -f service.yaml
 service "poacpm-service" created
 ```
 
+##### Upload the necessary files to CodeBuild.
+```bash
+$ aws s3 cp ~/.kube/config s3://secret.poac.pm/.kube/config
+```
+
+
+## Tips
+```bash
+$ kubectl get pods
+$ kubectl describe pod <PODID>
+```
+
 
 ## Update
 ```bash
@@ -146,6 +158,11 @@ $ kubectl delete -f configmap.yaml
 $ kops delete -f cluster.yaml --state s3://k8s.poac.pm --yes
 $ terraform destroy
 ```
+```bash
+$ aws s3 rm s3://k8s.poac.pm/*
+$ aws s3 rm s3://secret.poac.pm/.kube/config
+```
+
 
 ## References
 > [1] kopsを使ってKubernetesクラスタをAWS上で構成

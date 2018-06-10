@@ -44,7 +44,7 @@ spec:
   cloudLabels:
     Owner: Ken Matsui
   configBase: s3://k8s.poac.pm
-  kubernetesVersion: 1.9.5
+  kubernetesVersion: 1.9.6
   etcdClusters:
   - etcdMembers:
     - instanceGroup: master
@@ -109,8 +109,8 @@ metadata:
     kops.k8s.io/cluster: k8s.poac.pm
   name: master
 spec:
-  image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
-  machineType: t2.micro
+  image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
+  machineType: t2.small
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -131,8 +131,8 @@ metadata:
     kops.k8s.io/cluster: k8s.poac.pm
   name: nodes
 spec:
-  image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
-  machineType: t2.micro
+  image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
+  machineType: t2.small
   maxSize: 2
   minSize: 2
   nodeLabels:
@@ -154,7 +154,7 @@ metadata:
     kops.k8s.io/cluster: k8s.poac.pm
   name: bastions
 spec:
-  image: kope.io/k8s-1.4-debian-jessie-amd64-hvm-ebs-2016-10-21
+  image: kope.io/k8s-1.9-debian-jessie-amd64-hvm-ebs-2018-03-11
   machineType: t2.nano
   maxSize: 1
   minSize: 1
