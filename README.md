@@ -138,6 +138,8 @@ $ aws s3 cp ~/.kube/config s3://secret.poac.pm/.kube/config
 ```bash
 $ kubectl get pods
 $ kubectl describe pod <PODID>
+# Delete evicted pods
+$ kubectl get pods | grep Evicted | awk '{print $1}' | xargs kubectl delete pod
 ```
 
 
