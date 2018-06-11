@@ -128,7 +128,7 @@ $ kubectl create -f service.yaml
 service "poacpm-service" created
 ```
 
-##### Upload the necessary files to CodeBuild.
+#### Upload the necessary files to CodeBuild.
 ```bash
 $ aws s3 cp ~/.kube/config s3://secret.poac.pm/.kube/config
 ```
