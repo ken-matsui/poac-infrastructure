@@ -158,11 +158,9 @@ $ kubectl delete secret aws-credentials
 $ kubectl delete secret ecr
 $ kubectl delete -f configmap.yaml
 $ kops delete -f cluster.yaml --state s3://k8s.poac.pm --yes
-$ terraform destroy
-```
-```bash
-$ aws s3 rm s3://k8s.poac.pm/*
+$ aws s3 rm s3://k8s.poac.pm/ --exclude '*' --include '*' --recursive
 $ aws s3 rm s3://secret.poac.pm/.kube/config
+$ terraform destroy
 ```
 
 
