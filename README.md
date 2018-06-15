@@ -50,7 +50,7 @@ $ export AWS_ES_ENDPOINT='https://vpc-poacpm-2gue3ols5i62ko67jhgu2e3z4a.ap-north
 $ popd
 ```
 
-*Write `VPC-ID`(networkID) and `Subnet-ID` to [`cluster.yaml`](/k8s/cluster.yaml)...*
+**Write `VPC-ID`(networkID) and `Subnet-ID` to [`cluster.yaml`](/k8s/cluster.yaml)...**
 ### kubernetes
 #### Cluster
 ```bash
