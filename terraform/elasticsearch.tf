@@ -20,6 +20,7 @@ resource "aws_elasticsearch_domain" "es" {
 
   vpc_options {
     subnet_ids = ["${aws_subnet.pub4.id}"]
+    security_group_ids = ["${aws_security_group.allow_all.id}"]
   }
 
 # Full access (Only within the same vpc)
