@@ -98,10 +98,17 @@ secret "slack-secrets" created
 $ rm -f ./slack_webhook_url
 ```
 ```bash
-$ echo -n $AWS_ES_ENDPOINT > ./aws_es_endpoint
+$ printf $AWS_ES_ENDPOINT > ./aws_es_endpoint
 $ kubectl create secret generic aws-es-endpoint --from-file=./aws_es_endpoint
 secret "aws-es-endpoint" created
 $ rm -f ./aws_es_endpoint
+```
+```bash
+$ printf $GITHUB_CLIENT_ID > ./github_client_id
+$ printf $GITHUB_CLIENT_SECRET > ./github_client_secret
+$ printf $GITHUB_REDIRECT_URI > ./github_redirect_uri
+$ kubectl create secret generic github-oauth --from-file=./github_client_id --from-file=./github_client_secret --from-file=./github_redirect_uri
+$ rm -f ./github_*
 ```
 
 #### Deployments

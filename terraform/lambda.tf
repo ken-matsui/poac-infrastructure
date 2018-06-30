@@ -83,13 +83,12 @@ resource "aws_iam_role_policy" "dynamodb-stream" {
                 "dynamodb:GetShardIterator",
                 "dynamodb:ListStreams"
             ],
-            "Resource": "${aws_dynamodb_table.table.stream_arn}"
+            "Resource": "${aws_dynamodb_table.package.stream_arn}"
         }
     ]
 }
 EOF
 }
-
 resource "aws_iam_role_policy_attachment" "vpc_permissions" {
     role       = "${aws_iam_role.lambda.name}"
     policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
