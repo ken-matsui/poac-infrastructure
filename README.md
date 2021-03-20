@@ -1,13 +1,12 @@
-:warning: Server is stopping
-
 # poacpm Infrastructure
 
 :warning:
 **These files are provided to disclose the infrastructure configuration.
-Therefore, it is impossible to create a similar environment without editing.**
+Therefore, it is impossible to create the same environment without editing.**
 
 ## Environment
-It assumes the macOS.
+The host environment is assumed to be macOS.
+
 ### Tools
 * awscli
 * terraform
@@ -15,8 +14,7 @@ It assumes the macOS.
 * kops
 
 ## Deploy
-**We already got the `poac.pm` domain by `Route 53`.
-Also, we got `poac.pm` on `ap-northeast-1` and `*.poac.pm` on `us-east-1` by `Certificate Manager`.**
+**We've already gotten the `poac.pm` domain by `Route 53`; also, we've gotten ssl certificates of `poac.pm` on `ap-northeast-1` and `*.poac.pm` on `us-east-1` by `Certificate Manager`.**
 
 ### Installation and Configuration
 ```bash
